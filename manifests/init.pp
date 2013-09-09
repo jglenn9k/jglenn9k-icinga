@@ -37,11 +37,14 @@
 # Copyright 2013 Your name here, unless otherwise noted.
 #
 class icinga {
-include icinga::service, icinga::install, icinga::config
+    include icinga::service, icinga::install, icinga::config
 
-Nagios_host <<||>>
-Nagios_service <<||>>
-    
+    Nagios_host <<||>> {
+        notify  => Service['icinga']
+    }
+    Nagios_service <<||>> {
+        notify  => Service['icinga']
+    }
 }
 
 

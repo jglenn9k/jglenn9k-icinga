@@ -2,6 +2,9 @@ class icinga::client ($icinga_host) {
     package { 'nrpe':
         ensure => 'installed',
     }
+    package { 'nagios-plugins-all':
+            ensure => 'installed',
+    }
     service { 'nrpe':
         ensure => 'running',
         enable => true,

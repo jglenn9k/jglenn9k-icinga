@@ -1,10 +1,10 @@
 name    'thedonkdonk-icinga'
 version '0.1.0'
-source 'UNKNOWN'
+source 'https://github.com/thedonkdonk/thedonkdonk-icinga'
 author 'thedonkdonk'
-license 'Apache License, Version 2.0'
-summary 'UNKNOWN'
-description 'UNKNOWN'
+license 'GPL, Version 2'
+summary 'Puppet module for Icinga'
+description 'Manages Icinga. Automagically adds monitoring to your Icinga server for every host that is connected to Puppet.'
 project_page 'UNKNOWN'
 
 ## Add dependencies, if any:

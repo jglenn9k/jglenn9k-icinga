@@ -6,9 +6,8 @@
 #
 # Document parameters here.
 #
-# [*sample_parameter*]
-#   Explanation of what this parameter affects and what it defaults to.
-#   e.g. "Specify one or more upstream ntp servers as an array."
+# [*icinga_host*]
+#   Set this to your Icinga Server. It's used to allow the Icinga host to connect to the nrpe daemon.
 #
 # === Variables
 #
@@ -26,7 +25,9 @@
 #  class { 'icinga': }
 #
 #  Inlcude this on your Icinga client.
-#  class { 'icinga::client': }
+#  class { 'icinga::client': 
+#      icinga_host => '10.10.1.1',
+#  }
 # === Authors
 #
 # Author Name <thedonkdonk@gmail.com>
@@ -36,79 +37,11 @@
 # Copyright 2013 Your name here, unless otherwise noted.
 #
 class icinga {
-    package { 'icinga':
-        ensure => 'installed',
-        require => Package['icinga'],
-    }
-    service { "icinga":
-        ensure => running,
-        enable => true,
-        hasstatus => true,
-        hasrestart => true,
-    }
+include icinga::service, icinga::install, icinga::config
 
-    Nagios_host <<||>>
-    Nagios_service <<||>>
-
-    class client {
-    # Host Check
-        @@nagios_host { "$::fqdn":
-            ensure => present,
-            alias => "$::hostname",
-            address => "$::ipaddress",
-            use => "linux-server",
-            target => "/etc/icinga/hosts/${::hostname}_host.cfg"
-        }
-    # Service Checks
-        @@nagios_service { "check_users_${::hostname}":
-            ensure => present,
-            use => "linux-service",
-            host_name => "$::fqdn",
-            check_command => "check_nrpe!check_users",
-            service_description => "Current Users",
-            target => "/etc/icinga/hosts/${::hostname}_services.cfg"
-        }
-        @@nagios_service { "check_load_${::hostname}":
-            ensure => present,
-            use => "linux-service",
-            host_name => "$::fqdn",
-            check_command => "check_nrpe!check_load",
-            service_description => "Current Load",
-            target => "/etc/icinga/hosts/${::hostname}_services.cfg"
-        }
-        @@nagios_service { "check_zombie_procs_${::hostname}":
-            ensure => present,
-            use => "linux-service",
-            host_name => "$::fqdn",
-            check_command => "check_nrpe!check_zombie_procs",
-            service_description => "Zombie Processes",
-            target => "/etc/icinga/hosts/${::hostname}_services.cfg"
-        }
-        @@nagios_service { "check_total_procs_${::hostname}":
-            ensure => present,
-            use => "linux-service",
-            host_name => "$::fqdn",
-            check_command => "check_nrpe!check_total_procs",
-            service_description => "Total Processes",
-            target => "/etc/icinga/hosts/${::hostname}_services.cfg"
-        }
-        @@nagios_service { "check_disks_${::hostname}":
-            ensure => present,
-            use => "linux-service",
-            host_name => "$::fqdn",
-            check_command => "check_nrpe!check_disk",
-            service_description => "Disks",
-            target => "/etc/icinga/hosts/${::hostname}_services.cfg"
-        }
-        @@nagios_service { "check_ssh_${::hostname}":
-            ensure => present,
-            use => "linux-service",
-            host_name => "$::fqdn",
-            check_command => "check_ssh",
-            service_description => "SSH",
-            target => "/etc/icinga/hosts/${::hostname}_services.cfg"
-        }
-    }
+Nagios_host <<||>>
+Nagios_service <<||>>
+    
 }
 
 

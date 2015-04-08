@@ -6,45 +6,61 @@
 #
 # Document parameters here.
 #
-# [*icinga_host*]
-#   Set this to your Icinga Server. It's used to allow the Icinga host to connect to the nrpe daemon.
+# [*sample_parameter*]
+#   Explanation of what this parameter affects and what it defaults to.
+#   e.g. "Specify one or more upstream ntp servers as an array."
 #
 # === Variables
 #
 # Here you should define a list of variables that this module would require.
 #
 # [*sample_variable*]
-#   Explanation of how this variable affects the funtion of this class and if it
-#   has a default. e.g. "The parameter enc_ntp_servers must be set by the
+#   Explanation of how this variable affects the funtion of this class and if
+#   it has a default. e.g. "The parameter enc_ntp_servers must be set by the
 #   External Node Classifier as a comma separated list of hostnames." (Note,
-#   global variables should not be used in preference to class parameters  as of
-#   Puppet 2.6.)
+#   global variables should be avoided in favor of class parameters as
+#   of Puppet 2.6.)
 #
 # === Examples
-#  Include this on your Icinga server.
-#  class { 'icinga': }
 #
-#  Inlcude this on your Icinga client.
-#  class { 'icinga::client': 
-#      icinga_host => '10.10.1.1',
+#  class { 'icinga':
+#    servers => [ 'pool.ntp.org', 'ntp.local.company.com' ],
 #  }
+#
 # === Authors
 #
-# Author Name <thedonkdonk@gmail.com>
+# James Glenn <thedonkdonk@gmail.com>
 #
 # === Copyright
 #
-# Copyright 2013 Your name here, unless otherwise noted.
+# Copyright 2015 James Glenn, unless otherwise noted.
 #
-class icinga {
-    include icinga::service, icinga::install, icinga::config
-
-    Nagios_host <<||>> {
-        notify  => Service['icinga']
+class icinga (
+    $package_name = 'icinga',
+    $service_name = 'icinga',
+    )
+    {
+    case $::osfamily {
+        'RedHat': {
+            yumrepo { 'icinga-stable-release':
+                ensure  => 'present',
+                baseurl  => 'http://packages.icinga.org/epel/$releasever/release/',
+                descr    => 'ICINGA (stable release for epel)',
+                enabled  => '1',
+                gpgcheck => '1',
+                gpgkey   => 'http://packages.icinga.org/icinga.key',
+            }
+        }
+        default: {
+            notify { "TODO: Add support for $::osfamily.":
+                withpath => true,
+            }
+        }    
     }
-    Nagios_service <<||>> {
-        notify  => Service['icinga']
+    service { "$service_name":
+        ensure    => 'running',
+        enable     => 'true',
+        hasstatus  => 'true',
+        hasrestart => 'true',
     }
 }
-
-

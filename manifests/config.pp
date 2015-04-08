@@ -1,3 +1,0 @@
-class icinga::config {
-    
-}

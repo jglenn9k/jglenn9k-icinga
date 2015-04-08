@@ -1,18 +1,18 @@
 icinga
 
-This is the icinga module.
+This is the icinga module. Manages an Icinga server.
 
 License
 -------
 
-GPL, v2.
+[Apache License v2.0](https://www.apache.org/licenses/LICENSE-2.0)
 
 Contact
 -------
 
-thedonkdonk@gmail.com
+James Glenn <thedonkdonk@gmail.com>
 
 Support
 -------
 
-Please log tickets and issues at our [Projects site](https://github.com/thedonkdonk/thedonkdonk-icinga/issues/)
+Please log tickets and issues at [Github](https://github.com/thedonkdonk/thedonkdonk-icinga/issues/)

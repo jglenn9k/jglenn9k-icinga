@@ -55,7 +55,10 @@ class icinga (
             notify { "TODO: Add support for $::osfamily.":
                 withpath => true,
             }
-        }    
+        }
+    }
+    package { "$package_name":
+        ensure => 'installed'
     }
     service { "$service_name":
         ensure    => 'running',

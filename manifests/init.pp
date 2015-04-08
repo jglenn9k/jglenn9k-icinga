@@ -86,46 +86,74 @@ class icinga (
         notify  => Service['icinga']
     }
     Nagios_command <<||>> {
-        notify  => Service['icinga']
+        notify  => Service['icinga'],
+        owner => 'icinga',
+        target => '/etc/icinga/conf.d/icinga_command.cfg'
     }
     Nagios_contact <<||>> {
-        notify  => Service['icinga']
+        notify  => Service['icinga'],
+        owner => 'icinga',
+        target => '/etc/icinga/conf.d/icinga_contact.cfg'
     }
     Nagios_contactgroup <<||>> {
-        notify  => Service['icinga']
+        notify  => Service['icinga'],
+        owner => 'icinga',
+        target => '/etc/icinga/conf.d/icinga_contactgroup.cfg'
     }
     Nagios_host <<||>> {
-        notify  => Service['icinga']
+        notify  => Service['icinga'],
+        owner => 'icinga',
+        target => '/etc/icinga/conf.d/icinga_host.cfg'
     }
     Nagios_hostdependency <<||>> {
-        notify  => Service['icinga']
+        notify  => Service['icinga'],
+        owner => 'icinga',
+        target => '/etc/icinga/conf.d/icinga_hostdependency.cfg'
     }
     Nagios_hostescalation <<||>> {
-        notify  => Service['icinga']
+        notify  => Service['icinga'],
+        owner => 'icinga',
+        target => '/etc/icinga/conf.d/icinga_hostescalation.cfg'
     }
     Nagios_hostextinfo <<||>> {
-        notify  => Service['icinga']
+        notify  => Service['icinga'],
+        owner => 'icinga',
+        target => '/etc/icinga/conf.d/icinga_hostextinfo.cfg'
     }
     Nagios_hostgroup <<||>> {
-        notify  => Service['icinga']
+        notify  => Service['icinga'],
+        owner => 'icinga',
+        target => '/etc/icinga/conf.d/icinga_hostgroup.cfg'
     }
     Nagios_service <<||>> {
-        notify  => Service['icinga']
+        notify  => Service['icinga'],
+        owner => 'icinga',
+        target => '/etc/icinga/conf.d/icinga_service.cfg'
     }
     Nagios_servicedependency <<||>> {
-        notify  => Service['icinga']
+        notify  => Service['icinga'],
+        owner => 'icinga',
+        target => '/etc/icinga/conf.d/icinga_servicedependency.cfg'
     }
     Nagios_serviceescalation <<||>> {
-        notify  => Service['icinga']
+        notify  => Service['icinga'],
+        owner => 'icinga',
+        target => '/etc/icinga/conf.d/icinga_serviceescalation.cfg'
     }
     Nagios_serviceextinfo <<||>> {
-        notify  => Service['icinga']
+        notify  => Service['icinga'],
+        owner => 'icinga',
+        target => '/etc/icinga/conf.d/icinga_serviceextinfo.cfg'
     }
     Nagios_servicegroup <<||>> {
-        notify  => Service['icinga']
+        notify  => Service['icinga'],
+        owner => 'icinga',
+        target => '/etc/icinga/conf.d/icinga_servicegroup.cfg'
     }
     Nagios_timeperiod <<||>> {
-        notify  => Service['icinga']
+        notify  => Service['icinga'],
+        owner => 'icinga',
+        target => '/etc/icinga/conf.d/icinga_timeperiod.cfg'
     }
 
 }

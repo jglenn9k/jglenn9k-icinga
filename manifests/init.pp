@@ -85,46 +85,46 @@ class icinga (
         content => template('icinga/cgi.cfg.erb'),
         notify  => Service['icinga']
     }
-    icinga_command <<||>> {
+    Nagios_command <<||>> {
         notify  => Service['icinga']
     }
-    icinga_contact <<||>> {
+    Nagios_contact <<||>> {
         notify  => Service['icinga']
     }
-    icinga_contactgroup <<||>> {
+    Nagios_contactgroup <<||>> {
         notify  => Service['icinga']
     }
-    icinga_host <<||>> {
+    Nagios_host <<||>> {
         notify  => Service['icinga']
     }
-    icinga_hostdependency <<||>> {
+    Nagios_hostdependency <<||>> {
         notify  => Service['icinga']
     }
-    icinga_hostescalation <<||>> {
+    Nagios_hostescalation <<||>> {
         notify  => Service['icinga']
     }
-    icinga_hostextinfo <<||>> {
+    Nagios_hostextinfo <<||>> {
         notify  => Service['icinga']
     }
-    icinga_hostgroup <<||>> {
+    Nagios_hostgroup <<||>> {
         notify  => Service['icinga']
     }
-    icinga_service <<||>> {
+    Nagios_service <<||>> {
         notify  => Service['icinga']
     }
-    icinga_servicedependency <<||>> {
+    Nagios_servicedependency <<||>> {
         notify  => Service['icinga']
     }
-    icinga_serviceescalation <<||>> {
+    Nagios_serviceescalation <<||>> {
         notify  => Service['icinga']
     }
-    icinga_serviceextinfo <<||>> {
+    Nagios_serviceextinfo <<||>> {
         notify  => Service['icinga']
     }
-    icinga_servicegroup <<||>> {
+    Nagios_servicegroup <<||>> {
         notify  => Service['icinga']
     }
-    icinga_timeperiod <<||>> {
+    Nagios_timeperiod <<||>> {
         notify  => Service['icinga']
     }
 

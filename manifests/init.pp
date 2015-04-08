@@ -66,4 +66,66 @@ class icinga (
         hasstatus  => 'true',
         hasrestart => 'true',
     }
+    package { 'nagios-plugins-nrpe':
+        ensure => 'installed',
+    }
+    file { '/etc/icinga/icinga.cfg':
+        ensure => 'file',
+        owner   => 'root',
+        group   => 'root',
+        mode    => '0664',
+        content => template('icinga/icinga.cfg.erb'),
+        notify  => Service['icinga']
+    }
+    file { '/etc/icinga/cgi.cfg':
+        ensure => 'file',
+        owner   => 'root',
+        group   => 'root',
+        mode    => '0664',
+        content => template('icinga/cgi.cfg.erb'),
+        notify  => Service['icinga']
+    }
+    icinga_command <<||>> {
+        notify  => Service['icinga']
+    }
+    icinga_contact <<||>> {
+        notify  => Service['icinga']
+    }
+    icinga_contactgroup <<||>> {
+        notify  => Service['icinga']
+    }
+    icinga_host <<||>> {
+        notify  => Service['icinga']
+    }
+    icinga_hostdependency <<||>> {
+        notify  => Service['icinga']
+    }
+    icinga_hostescalation <<||>> {
+        notify  => Service['icinga']
+    }
+    icinga_hostextinfo <<||>> {
+        notify  => Service['icinga']
+    }
+    icinga_hostgroup <<||>> {
+        notify  => Service['icinga']
+    }
+    icinga_service <<||>> {
+        notify  => Service['icinga']
+    }
+    icinga_servicedependency <<||>> {
+        notify  => Service['icinga']
+    }
+    icinga_serviceescalation <<||>> {
+        notify  => Service['icinga']
+    }
+    icinga_serviceextinfo <<||>> {
+        notify  => Service['icinga']
+    }
+    icinga_servicegroup <<||>> {
+        notify  => Service['icinga']
+    }
+    icinga_timeperiod <<||>> {
+        notify  => Service['icinga']
+    }
+
 }

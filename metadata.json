@@ -1,6 +1,6 @@
 {
   "name": "thedonkdonk-icinga",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "thedonkdonk",
   "summary": "Manage Icinga server",
   "license": "Apache-2.0",
@@ -9,13 +9,7 @@
   "issues_url": "https://github.com/thedonkdonk/thedonkdonk-icinga/issues",
   "description": "Module for Icinga configuration",
   "dependencies": [
-    {"name":"puppetlabs/stdlib","version_requirement":">= 2.4.0 < 5.0.0"}
-  ],
-  "requirements": [
-    {
-      "name": "puppet",
-      "version_requirement": "3.x"
-    }
+    {"name":"puppetlabs/stdlib","version_requirement":">= 2.4.0"}
   ],
   "operatingsystem_support": [
     {

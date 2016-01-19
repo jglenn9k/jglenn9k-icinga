@@ -937,9 +937,7 @@ enable_event_handlers=1
 # performance data.
 # Values: 1 = process performance data, 0 = do not process performance data
 
-process_performance_data=0
-
-
+process_performance_data=1
 
 # HOST AND SERVICE PERFORMANCE DATA PROCESSING COMMANDS
 # These commands are run after every host and service check is
@@ -959,9 +957,8 @@ process_performance_data=0
 # Performance data is only written to these files if the
 # process_performance_data option (above) is set to 1.
 
-#host_perfdata_file=/tmp/host-perfdata
-#service_perfdata_file=/tmp/service-perfdata
-
+host_perfdata_file=/usr/local/pnp4nagios/var/host-perfdata
+service_perfdata_file=/usr/local/pnp4nagios/var/service-perfdata
 
 
 # HOST AND SERVICE PERFORMANCE DATA FILE TEMPLATES
@@ -972,10 +969,11 @@ process_performance_data=0
 # to the performance data file.  Some examples of what you can do are
 # shown below.
 
-#host_perfdata_file_template=[HOSTPERFDATA]\t$TIMET$\t$HOSTNAME$\t$HOSTEXECUTIONTIME$\t$HOSTOUTPUT$\t$HOSTPERFDATA$
-#service_perfdata_file_template=[SERVICEPERFDATA]\t$TIMET$\t$HOSTNAME$\t$SERVICEDESC$\t$SERVICEEXECUTIONTIME$\t$SERVICELATENCY$\t$SERVICEOUTPUT$\t$SERVICEPERFDATA$
-
-
+service_perfdata_file_template=DATATYPE::SERVICEPERFDATA\tTIMET::$TIMET$\tHOSTNAME::$HOSTNAME$\tSERVICEDESC::$S
+ERVICEDESC$\tSERVICEPERFDATA::$SERVICEPERFDATA$\tSERVICECHECKCOMMAND::$SERVICECHECKCOMMAND$\tHOSTSTATE::$HOSTSTA
+TE$\tHOSTSTATETYPE::$HOSTSTATETYPE$\tSERVICESTATE::$SERVICESTATE$\tSERVICESTATETYPE::$SERVICESTATETYPE$
+host_perfdata_file_template=DATATYPE::HOSTPERFDATA\tTIMET::$TIMET$\tHOSTNAME::$HOSTNAME$\tHOSTPERFDATA::$HOSTPE
+RFDATA$\tHOSTCHECKCOMMAND::$HOSTCHECKCOMMAND$\tHOSTSTATE::$HOSTSTATE$\tHOSTSTATETYPE::$HOSTSTATETYPE$
 
 # HOST AND SERVICE PERFORMANCE DATA FILE MODES
 # This option determines whether or not the host and service
@@ -984,9 +982,8 @@ process_performance_data=0
 # pipe ("p") mode which avoid blocking at startup, otherwise you will
 # likely want the defult append ("a") mode.
 
-#host_perfdata_file_mode=a
-#service_perfdata_file_mode=a
-
+host_perfdata_file_mode=a
+service_perfdata_file_mode=a
 
 
 # HOST AND SERVICE PERFORMANCE DATA FILE PROCESSING INTERVAL
@@ -995,9 +992,8 @@ process_performance_data=0
 # below.  A value of 0 indicates the files should not be periodically
 # processed.
 
-#host_perfdata_file_processing_interval=0
-#service_perfdata_file_processing_interval=0
-
+host_perfdata_file_processing_interval=15
+service_perfdata_file_processing_interval=15
 
 
 # HOST AND SERVICE PERFORMANCE DATA FILE PROCESSING COMMANDS
@@ -1005,8 +1001,8 @@ process_performance_data=0
 # service performance data files.  The interval at which the
 # processing occurs is determined by the options above.
 
-#host_perfdata_file_processing_command=process-host-perfdata-file
-#service_perfdata_file_processing_command=process-service-perfdata-file
+host_perfdata_file_processing_command=process-host-perfdata-file
+service_perfdata_file_processing_command=process-service-perfdata-file
 
 
 # HOST AND SERVICE PERFORMANCE DATA PROCESS EMPTY RESULTS
@@ -1433,7 +1429,7 @@ use_large_installation_tweaks=0
 # Values: 1 - Enable environment variable macros
 #         0 - Disable environment variable macros (default)
 
-enable_environment_macros=0
+enable_environment_macros=1
 
 
 

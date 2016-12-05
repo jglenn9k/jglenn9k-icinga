@@ -1,6 +1,6 @@
 # == Class: icinga
 #
-# Setup and configure Icinga server. Leverages exported resources for configs. 
+# Setup and configure Icinga server. Leverages exported resources for configs.
 #
 # === Parameters
 #
@@ -12,7 +12,7 @@
 #
 # === Authors
 #
-# James Glenn <thedonkdonk@gmail.com>
+# James Glenn <jglenn9k@gmail.com>
 #
 # === Copyright
 #
@@ -21,9 +21,7 @@
 class icinga (
     $package_name = 'icinga',
     $service_name = 'icinga',
-    $user_name = 'icinga',
-    $group_name = 'icinga',
-    )
+    ) inherits icinga::config
     {
     case $::osfamily {
         'RedHat': {
@@ -54,22 +52,7 @@ class icinga (
     package { 'nagios-plugins-nrpe':
         ensure => 'installed',
     }
-    file { '/etc/icinga/icinga.cfg':
-        ensure => 'file',
-        owner   => 'root',
-        group   => 'root',
-        mode    => '0664',
-        content => template('icinga/icinga.cfg.erb'),
-        notify  => Service['icinga']
-    }
-    file { '/etc/icinga/cgi.cfg':
-        ensure => 'file',
-        owner   => 'root',
-        group   => 'root',
-        mode    => '0664',
-        content => template('icinga/cgi.cfg.erb'),
-        notify  => Service['icinga']
-    }
+
     Nagios_command <<||>> {
         notify  => Service['icinga'],
         owner => 'icinga',

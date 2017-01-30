@@ -208,14 +208,6 @@ read_gzip_logs=0
 #
 ######################################
 
-# ATTRIBUTE BASED AUTHORIZATION FILE
-# This option will include a file defining authroization based on
-# attributes.
-
-#authorization_config_file=/etc/icinga/cgiauth.cfg
-
-
-
 # AUTHENTICATION USAGE
 # This option controls whether or not the CGIs will use any
 # authentication when displaying host and service information, as
@@ -248,9 +240,9 @@ use_authentication=1
 #
 # Values:
 # 0 = Use web server environment variable REMOTE_USER to get the user
-#       logged in. Don't use client certificates (default)
+#	logged in. Don't use client certificates (default)
 # 1 = Use web server environment variable SSL_CLIENT_S_DN_CN to get
-#       the user logged in. Use client certificates
+#	the user logged in. Use client certificates
 
 use_ssl_authentication=0
 
@@ -509,8 +501,8 @@ show_partial_servicegroups=0
 # the statusmap CGI should use for drawing hosts.  If you do
 # not use this option, the default is to use user-defined
 # coordinates.  Valid options are as follows:
-#       0 = User-defined coordinates
-#       1 = Depth layers
+#	0 = User-defined coordinates
+#	1 = Depth layers
 #       2 = Collapsed tree
 #       3 = Balanced tree
 #       4 = Circular
@@ -578,7 +570,7 @@ display_status_totals=0
 # This option allows you to define if table rows in status.cgi
 # will be highlighted or not.
 # Values: 0 = disables row highlighting
-#         1 = enables row highlighting
+#	  1 = enables row highlighting
 
 highlight_table_rows=1
 
@@ -596,11 +588,11 @@ highlight_table_rows=1
 # considered in trouble.
 # Relevant values from include/statusdata.h (look them up
 # *there* if you want to be *really* sure):
-#       #define SERVICE_PENDING         1
-#       #define SERVICE_OK              2
-#       #define SERVICE_WARNING         4
-#       #define SERVICE_UNKNOWN         8
-#       #define SERVICE_CRITICAL        16
+#	#define	SERVICE_PENDING		1
+#	#define	SERVICE_OK		2
+#	#define	SERVICE_WARNING		4
+#	#define	SERVICE_UNKNOWN		8
+#	#define	SERVICE_CRITICAL	16
 # You'll likely want to use add_notif_num_hard=0 (default)
 # or add_notif_num_hard=28 (warn+crit+unknown). There's an
 # add_notif_num_soft affecting services in a SOFT state
@@ -635,7 +627,7 @@ sort_status_data_by_default=0
 # If you want to log information from cgi's (e.g. all submitted commands)
 # then set this option to 1, default is 0 (off).
 # WARNING:
-# This log is highly experimental and changes may occure without notice. Use at your own risk!!
+# This log is highly experimental and changes may occur without notice. Use at your own risk!!
 
 use_logging=1
 
@@ -652,11 +644,11 @@ cgi_log_file=/var/log/icinga/gui/icinga-cgi.log
 # CGI LOG ROTATION METHOD
 # This is the log rotation method that should be used to rotate
 # the cgi log file. Values are as follows..
-#       n       = None - don't rotate the log
-#       h       = Hourly rotation (top of the hour)
-#       d       = Daily rotation (midnight every day)
-#       w       = Weekly rotation (midnight on Saturday evening)
-#       m       = Monthly rotation (midnight last day of month)
+#	n	= None - don't rotate the log
+#	h	= Hourly rotation (top of the hour)
+#	d	= Daily rotation (midnight every day)
+#	w	= Weekly rotation (midnight on Saturday evening)
+#	m	= Monthly rotation (midnight last day of month)
 
 cgi_log_rotation_method=d
 
@@ -829,9 +821,9 @@ exclude_customvar_value=secret
 # SHOW CHILD HOSTS IN EXTINFO OPTION
 # This Option allows you to specify if the extended host information
 # cgi will show child hosts for the selected host.
-#       0 = disabled
-#       1 = only show immediate child hosts
-#       2 = show immediate and all child hosts
+#	0 = disabled
+#	1 = only show immediate child hosts
+#	2 = show immediate and all child hosts
 # NOTE: Option 2 could be a real performance killer in
 # large installations, so use with care.
 # By default disabled, as this could be a performance killer.
@@ -844,10 +836,10 @@ extinfo_show_child_hosts=0
 # Activating this option changes the <title> of status.cgi
 # and extinfo.cgi when they refer to a single host, service,
 # or group. They will then read:
-#       [Host]
-#       {HostGroup}
-#       ServiceDesc @ Host
-#       (ServiceGroup)
+#	[Host]
+#	{HostGroup}
+#	ServiceDesc @ Host
+#	(ServiceGroup)
 # These are easier to read and find if you use (many) tabs
 # in your browser.
 # Default is enabled. 0=disabled, 1=enabled
@@ -1017,11 +1009,11 @@ log_file=/var/log/icinga/icinga.log
 # LOG ROTATION METHOD
 # This is the log rotation method that Icinga should use to rotate
 # the main log file. Values are as follows..
-#       n       = None - don't rotate the log
-#       h       = Hourly rotation (top of the hour)
-#       d       = Daily rotation (midnight every day)
-#       w       = Weekly rotation (midnight on Saturday evening)
-#       m       = Monthly rotation (midnight last day of month)
+#	n	= None - don't rotate the log
+#	h	= Hourly rotation (top of the hour)
+#	d	= Daily rotation (midnight every day)
+#	w	= Weekly rotation (midnight on Saturday evening)
+#	m	= Monthly rotation (midnight last day of month)
 
 log_rotation_method=d
 
@@ -1039,10 +1031,10 @@ log_archive_path=/var/log/icinga/archives
 # DATE FORMAT OPTION
 # This option determines how short dates are displayed. Valid options
 # include:
-#       us              (MM-DD-YYYY HH:MM:SS)
-#       euro            (DD-MM-YYYY HH:MM:SS)
-#       iso8601         (YYYY-MM-DD HH:MM:SS)
-#       strict-iso8601  (YYYY-MM-DDTHH:MM:SS)
+#	us		(MM-DD-YYYY HH:MM:SS)
+#	euro    	(DD-MM-YYYY HH:MM:SS)
+#	iso8601		(YYYY-MM-DD HH:MM:SS)
+#	strict-iso8601	(YYYY-MM-DDTHH:MM:SS)
 #
 
 date_format=us

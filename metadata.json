@@ -1,13 +1,12 @@
 {
     "name": "jglenn9k-icinga",
-    "version": "0.1.3",
+    "version": "0.1.4",
     "author": "jglenn9k",
     "summary": "Manage Icinga server",
     "license": "Apache-2.0",
     "source": "https://github.com/jglenn9k/jglenn9k-icinga",
     "project_page": "https://github.com/jglenn9k/jglenn9k-icinga",
     "issues_url": "https://github.com/jglenn9k/jglenn9k-icinga/issues",
-    "description": "Module for Icinga configuration",
     "dependencies": [{
         "name": "puppetlabs/stdlib",
         "version_requirement": ">= 2.4.0"

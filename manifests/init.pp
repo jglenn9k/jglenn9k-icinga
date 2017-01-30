@@ -21,8 +21,9 @@
 class icinga (
     $package_name = 'icinga',
     $service_name = 'icinga',
-    ) inherits icinga::config
-    {
+    $log_file     = '/var/log/icinga/icinga.log'
+    )
+{
     case $::osfamily {
         'RedHat': {
             yumrepo { 'icinga-stable-release':
@@ -47,15 +48,31 @@ class icinga (
     service { 'icinga':
         name       => "$service_name",
         ensure     => 'running',
-        enable     => 'true',
-        hasstatus  => 'true',
-        hasrestart => 'true',
+        enable     => true,
+        hasstatus  => true,
+        hasrestart => true,
     }
     package { 'nagios-plugins-nrpe':
         ensure => 'installed',
     }
     package { 'icinga-gui':
         ensure => 'installed',
+    }
+    file { '/etc/icinga/icinga.cfg':
+    ensure => 'file',
+        owner   => 'root',
+        group   => 'root',
+        mode    => '0644',
+        content => template('icinga/icinga.cfg.erb'),
+        notify  => Service['icinga']
+    }
+    file { '/etc/icinga/cgi.cfg':
+        ensure  => 'file',
+        owner   => 'root',
+        group   => 'root',
+        mode    => '0644',
+        content => template('icinga/cgi.cfg.erb'),
+        notify  => Service['icinga']
     }
     Nagios_command <<||>> {
         notify => Service['icinga'],

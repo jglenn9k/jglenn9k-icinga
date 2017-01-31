@@ -1,7 +1,4 @@
 ### File managed with puppet ###
-## Served by:        '<%= scope.lookupvar('::servername') %>'
-## Module:           '<%= scope.to_hash['module_name'] %>'
-## Template source:  'MODULES<%= template_source.gsub(Regexp.new("^#{Puppet::Node::Environment.current[:modulepath].gsub(':','|')}"),"") %>'
 
 ##############################################################################
 #
@@ -22,7 +19,6 @@
 log_file=<%= @log_file -%>
 
 
-
 # OBJECT CONFIGURATION FILE(S)
 # These are the object configuration files in which you define hosts,
 # host groups, contacts, contact groups, services, etc.
@@ -34,6 +30,9 @@ log_file=<%= @log_file -%>
 # cfg_dir directive as shown below with conf.d
 
 cfg_dir=/etc/icinga/conf.d
+
+# Definitions for broker modules like idoutils.cfg
+cfg_dir=/etc/icinga/modules
 
 
 # OBJECT CACHE FILE
@@ -110,7 +109,7 @@ status_update_interval=10
 # This determines the effective user that Icinga should run as.
 # You can either supply a username or a UID.
 
-icinga_user=icinga
+icinga_user=<%= @user_name -%>
 
 
 
@@ -118,7 +117,7 @@ icinga_user=icinga
 # This determines the effective group that Icinga should run as.
 # You can either supply a group name or a GID.
 
-icinga_group=icinga
+icinga_group=<%= @group_name -%>
 
 
 
@@ -217,17 +216,47 @@ event_broker_options=-1
 # ----> use the new *module definition* instead:
 # ----> http://docs.icinga.org/latest/en/objectdefinitions.html
 #
-# Example definitions can be found in the '/etc/icinga/modules/' directory.
+# This directive can be used to specify an event broker module that should
+# by loaded by Icinga at startup.  Use multiple directives if you want
+# to load more than one module.  Arguments that should be passed to
+# the module at startup are seperated from the module path by a space.
+#
+#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# WARNING !!! WARNING !!! WARNING !!! WARNING !!! WARNING !!! WARNING
+#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# Do NOT overwrite modules while they are being used by Icinga or Icinga
+# will crash in a fiery display of SEGFAULT glory.
+#
+# The correct/safe way of updating a module is by using one of these methods:
+#    1. Shutdown Icinga, replace the module file, restart Icinga
+#    2. Delete the original module file, move the new module file into place, restart Icinga
+#
+#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# WARNING !!! WARNING !!! WARNING !!! WARNING !!! WARNING !!! WARNING
+#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#
+# IDOUtils idomod.so should be enabled using the module definition,
+# i.e. using a package. First check that, and if not, you can
+# enable it here.
+#
+# ATTENTION: DO NOT load the same module here AND as a module definition.
+# This can lead into problems with races on ressources.
+#
+# Example:
+#   broker_module=<modulepath> [moduleargs]
+
+#broker_module=/usr/lib64/icinga/idomod.so config_file=/etc/icinga/idomod.cfg
+
 
 
 # LOG ROTATION METHOD
 # This is the log rotation method that Icinga should use to rotate
 # the main log file. Values are as follows..
-#	n	= None - don't rotate the log
-#	h	= Hourly rotation (top of the hour)
-#	d	= Daily rotation (midnight every day)
-#	w	= Weekly rotation (midnight on Saturday evening)
-#	m	= Monthly rotation (midnight last day of month)
+#       n       = None - don't rotate the log
+#       h       = Hourly rotation (top of the hour)
+#       d       = Daily rotation (midnight every day)
+#       w       = Weekly rotation (midnight on Saturday evening)
+#       m       = Monthly rotation (midnight last day of month)
 
 log_rotation_method=d
 
@@ -390,9 +419,9 @@ log_long_plugin_output=0
 # at the same time (with no delay between them)!  This is not a
 # good thing for production, but is useful when testing the
 # parallelization functionality.
-#	n	= None - don't use any delay between checks
-#	d	= Use a "dumb" delay of 1 second between checks
-#	s	= Use "smart" inter-check delay calculation
+#       n       = None - don't use any delay between checks
+#       d       = Use a "dumb" delay of 1 second between checks
+#       s       = Use "smart" inter-check delay calculation
 #       x.xx    = Use an inter-check delay of x.xx seconds
 
 service_inter_check_delay_method=s
@@ -431,9 +460,9 @@ service_interleave_factor=s
 # space all host checks out evenly to minimize CPU load.
 # Using the dumb setting will cause all checks to be scheduled
 # at the same time (with no delay between them)!
-#	n	= None - don't use any delay between checks
-#	d	= Use a "dumb" delay of 1 second between checks
-#	s	= Use "smart" inter-check delay calculation
+#       n       = None - don't use any delay between checks
+#       d       = Use a "dumb" delay of 1 second between checks
+#       s       = Use "smart" inter-check delay calculation
 #       x.xx    = Use an inter-check delay of x.xx seconds
 
 host_inter_check_delay_method=s
@@ -904,9 +933,7 @@ enable_event_handlers=1
 # performance data.
 # Values: 1 = process performance data, 0 = do not process performance data
 
-process_performance_data=0
-
-
+process_performance_data=1
 
 # HOST AND SERVICE PERFORMANCE DATA PROCESSING COMMANDS
 # These commands are run after every host and service check is
@@ -926,9 +953,8 @@ process_performance_data=0
 # Performance data is only written to these files if the
 # process_performance_data option (above) is set to 1.
 
-#host_perfdata_file=/tmp/host-perfdata
-#service_perfdata_file=/tmp/service-perfdata
-
+host_perfdata_file=/usr/local/pnp4nagios/var/host-perfdata
+service_perfdata_file=/usr/local/pnp4nagios/var/service-perfdata
 
 
 # HOST AND SERVICE PERFORMANCE DATA FILE TEMPLATES
@@ -939,10 +965,8 @@ process_performance_data=0
 # to the performance data file.  Some examples of what you can do are
 # shown below.
 
-#host_perfdata_file_template=[HOSTPERFDATA]\t$TIMET$\t$HOSTNAME$\t$HOSTEXECUTIONTIME$\t$HOSTOUTPUT$\t$HOSTPERFDATA$
-#service_perfdata_file_template=[SERVICEPERFDATA]\t$TIMET$\t$HOSTNAME$\t$SERVICEDESC$\t$SERVICEEXECUTIONTIME$\t$SERVICELATENCY$\t$SERVICEOUTPUT$\t$SERVICEPERFDATA$
-
-
+service_perfdata_file_template=DATATYPE::SERVICEPERFDATA\tTIMET::$TIMET$\tHOSTNAME::$HOSTNAME$\tSERVICEDESC::$SERVICEDESC$\tSERVICEPERFDATA::$SERVICEPERFDATA$\tSERVICECHECKCOMMAND::$SERVICECHECKCOMMAND$\tHOSTSTATE::$HOSTSTATE$\tHOSTSTATETYPE::$HOSTSTATETYPE$\tSERVICESTATE::$SERVICESTATE$\tSERVICESTATETYPE::$SERVICESTATETYPE$
+host_perfdata_file_template=DATATYPE::HOSTPERFDATA\tTIMET::$TIMET$\tHOSTNAME::$HOSTNAME$\tHOSTPERFDATA::$HOSTPERFDATA$\tHOSTCHECKCOMMAND::$HOSTCHECKCOMMAND$\tHOSTSTATE::$HOSTSTATE$\tHOSTSTATETYPE::$HOSTSTATETYPE$
 
 # HOST AND SERVICE PERFORMANCE DATA FILE MODES
 # This option determines whether or not the host and service
@@ -951,9 +975,8 @@ process_performance_data=0
 # pipe ("p") mode which avoid blocking at startup, otherwise you will
 # likely want the defult append ("a") mode.
 
-#host_perfdata_file_mode=a
-#service_perfdata_file_mode=a
-
+host_perfdata_file_mode=a
+service_perfdata_file_mode=a
 
 
 # HOST AND SERVICE PERFORMANCE DATA FILE PROCESSING INTERVAL
@@ -962,9 +985,8 @@ process_performance_data=0
 # below.  A value of 0 indicates the files should not be periodically
 # processed.
 
-#host_perfdata_file_processing_interval=0
-#service_perfdata_file_processing_interval=0
-
+host_perfdata_file_processing_interval=15
+service_perfdata_file_processing_interval=15
 
 
 # HOST AND SERVICE PERFORMANCE DATA FILE PROCESSING COMMANDS
@@ -972,8 +994,8 @@ process_performance_data=0
 # service performance data files.  The interval at which the
 # processing occurs is determined by the options above.
 
-#host_perfdata_file_processing_command=process-host-perfdata-file
-#service_perfdata_file_processing_command=process-service-perfdata-file
+host_perfdata_file_processing_command=process-host-perfdata-file
+service_perfdata_file_processing_command=process-service-perfdata-file
 
 
 # HOST AND SERVICE PERFORMANCE DATA PROCESS EMPTY RESULTS
@@ -1198,10 +1220,10 @@ high_host_flap_threshold=20.0
 # DATE FORMAT OPTION
 # This option determines how short dates are displayed. Valid options
 # include:
-#	us		(MM-DD-YYYY HH:MM:SS)
-#	euro    	(DD-MM-YYYY HH:MM:SS)
-#	iso8601		(YYYY-MM-DD HH:MM:SS)
-#	strict-iso8601	(YYYY-MM-DDTHH:MM:SS)
+#       us              (MM-DD-YYYY HH:MM:SS)
+#       euro            (DD-MM-YYYY HH:MM:SS)
+#       iso8601         (YYYY-MM-DD HH:MM:SS)
+#       strict-iso8601  (YYYY-MM-DDTHH:MM:SS)
 #
 
 date_format=us
@@ -1299,14 +1321,14 @@ illegal_object_name_chars=`~!$%^&*|'"<>?,()=
 # handlers, etc.  This DOES NOT affect macros used in service or
 # host check commands.
 # The following macros are stripped of the characters you specify:
-#	$HOSTOUTPUT$
-#	$HOSTPERFDATA$
-#	$HOSTACKAUTHOR$
-#	$HOSTACKCOMMENT$
-#	$SERVICEOUTPUT$
-#	$SERVICEPERFDATA$
-#	$SERVICEACKAUTHOR$
-#	$SERVICEACKCOMMENT$
+#       $HOSTOUTPUT$
+#       $HOSTPERFDATA$
+#       $HOSTACKAUTHOR$
+#       $HOSTACKCOMMENT$
+#       $SERVICEOUTPUT$
+#       $SERVICEPERFDATA$
+#       $SERVICEACKAUTHOR$
+#       $SERVICEACKCOMMENT$
 
 illegal_macro_output_chars=`~$&|'"<>
 
@@ -1400,7 +1422,7 @@ use_large_installation_tweaks=0
 # Values: 1 - Enable environment variable macros
 #         0 - Disable environment variable macros (default)
 
-enable_environment_macros=0
+enable_environment_macros=1
 
 
 
@@ -1438,10 +1460,10 @@ enable_environment_macros=0
 # Values:
 #          -1 = Everything
 #          0 = Nothing
-#	   1 = Functions
+#          1 = Functions
 #          2 = Configuration
 #          4 = Process information
-#	   8 = Scheduled events
+#          8 = Scheduled events
 #          16 = Host/service checks
 #          32 = Notifications
 #          64 = Event broker
@@ -1481,3 +1503,7 @@ debug_file=/var/log/icinga/icinga.debug
 
 # 100M
 max_debug_file_size=100000000
+
+
+
+#   EOF

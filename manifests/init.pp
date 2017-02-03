@@ -21,6 +21,8 @@
 class icinga (
     $package_name = 'icinga',
     $service_name = 'icinga',
+    $user_name    = 'icinga',
+    $group_name   = 'icinga',
     $log_file     = '/var/log/icinga/icinga.log'
     )
 {

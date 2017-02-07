@@ -994,8 +994,8 @@ service_perfdata_file_processing_interval=15
 # service performance data files.  The interval at which the
 # processing occurs is determined by the options above.
 
-host_perfdata_file_processing_command=process-host-perfdata-file
-service_perfdata_file_processing_command=process-service-perfdata-file
+host_perfdata_file_processing_command=<%= @host_perfdata_file_processing_command %>
+service_perfdata_file_processing_command=<%= @service_perfdata_file_processing_command %>
 
 
 # HOST AND SERVICE PERFORMANCE DATA PROCESS EMPTY RESULTS

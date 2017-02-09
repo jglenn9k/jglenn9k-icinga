@@ -343,7 +343,7 @@ log_event_handlers=1
 # statistics reporting, you do not need to enable this option.  In
 # this case, set the value to 0.
 
-log_initial_states=0
+log_initial_states=<%= @log_initial_states -%>
 
 
 
@@ -985,8 +985,8 @@ service_perfdata_file_mode=a
 # below.  A value of 0 indicates the files should not be periodically
 # processed.
 
-host_perfdata_file_processing_interval=15
-service_perfdata_file_processing_interval=15
+host_perfdata_file_processing_interval=<%= @host_perfdata_file_processing_interval %>
+service_perfdata_file_processing_interval=<%= @service_perfdata_file_processing_interval %>
 
 
 # HOST AND SERVICE PERFORMANCE DATA FILE PROCESSING COMMANDS

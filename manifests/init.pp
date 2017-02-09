@@ -23,8 +23,11 @@ class icinga (
     $service_name = 'icinga',
     $user_name    = 'icinga',
     $group_name   = 'icinga',
+    $log_initial_states = '0',
     $host_perfdata_file_processing_command = 'process-host-perfdata-file',
     $service_perfdata_file_processing_command = 'process-service-perfdata-file',
+    $host_perfdata_file_processing_interval = '15',
+    $service_perfdata_file_processing_interval = '15',
     $log_file     = '/var/log/icinga/icinga.log'
     )
 {

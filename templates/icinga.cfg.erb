@@ -1,4 +1,4 @@
-### File managed with puppet ###
+enable_environment_macros### File managed with puppet ###
 
 ##############################################################################
 #
@@ -1406,7 +1406,7 @@ daemon_dumps_core=0
 # Values: 1 - Enabled tweaks
 #         0 - Disable tweaks (default)
 
-use_large_installation_tweaks=0
+use_large_installation_tweaks=<%= @use_large_installation_tweaks %>
 
 
 
@@ -1422,7 +1422,7 @@ use_large_installation_tweaks=0
 # Values: 1 - Enable environment variable macros
 #         0 - Disable environment variable macros (default)
 
-enable_environment_macros=0
+enable_environment_macros=<%= @enable_environment_macros %>
 
 
 
